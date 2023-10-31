@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+{% extends 'layouts/base.html' %}
+
+{% block title %} Dashboard {% endblock title %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+<style>
+    .present {
+        background-color: green;
+        color: white;
+    }
+
+    .absent {
+        background-color: red;
+        color: white;
+    }
+
+    .leave {
+        background-color: yellow;
+        color: black;
+    }
+  .centered-button {
+            display: flex;
+            justify-content: center;
+
+</style>
+<div class="row">
+        <div class="col-xl-12">
+          <div class="card">
+            <div class="card-header border-0">
+              <div class="row align-items-center">
+                <div class="col">
+                  <h3 class="mb-0">Page visits</h3>
+                </div>
+                <div class="col text-right">
+                  <a href="#!" class="btn btn-sm btn-primary">See all</a>
+                </div>
+              </div>
+            </div>
+            <div class="table-responsive">
+              <!-- Projects table -->
+              <table class="table align-items-center table-flush">
+                <thead class="thead-light">
+                  <tr>
+                    <th scope="col">Student Id</th>
+                    <th scope="col">Student Name</th>
+                    <th scope="col">Today Date</th>
+                    <th scope="col">Attendance Status</th>
+                    <th scope="col">Teacher Comments</th>
+                  </tr>
+                </thead>
+                <tbody>
+                {% for student in meetings %}
+                  <tr>
+                    <th scope="row">
+                      {{student.participant_id}}
+                    </th>
+                    <td>
+                      {{ student.name }}
+                    </td>
+                    <td>
+                      {{ student.date }}
+                    </td>
+                    <td class="{% if student.attendance_status == 'Present' %}present{% elif student.attendance_status == 'Absent' %}absent{% elif student.attendance_status == 'Leave' %}leave{% endif %}">
+                      <i class="fas fa-arrow-up text-success mr-3"></i> {{ student.attendance_status }}
+                    </td>
+                    <td>
+                      <i class="fas fa-arrow-up text-success mr-3"></i> {{ student.comment }}
+                    </td>
+                  </tr>
+
+                  </tr>
+                </tbody>
+                {% endfor %}
+              </table>
+            </div>
+          </div>
+        </div>
+
+
+    </div>
+
+
+
+<div class="row">
+  <form class="form-group col-xl-12" method="post" id="Attendance">
+
+    {% csrf_token %}
+        <div class="col-xl-12">
+          <div class="card">
+            <div class="card-header border-0">
+              <div class="row align-items-center">
+                <div class="col">
+                  <h3 class="mb-0">Page visits</h3>
+                </div>
+                <div class="col text-right">
+                  <a href="#!" class="btn btn-sm btn-primary">See all</a>
+                </div>
+              </div>
+            </div>
+            <div class="table-responsive">
+              <!-- Projects table -->
+              <table class="table align-items-center table-flush">
+                <thead class="thead-light">
+                  <tr>
+                    <th scope="col">Student Id</th>
+                    <th scope="col">Student Name</th>
+                    <th scope="col">Today Date</th>
+                    <th scope="col">Attendance Status</th>
+                    <th scope="col">Teacher Comments</th>
+                    <th scope="col">Select</th>
+                  </tr>
+                </thead>
+                <tbody>
+                {% for student in meetings %}
+                  <tr>
+                    <th scope="row">
+                      {{ student.participant_id }}
+                    </th>
+                    <td>
+                      {{ student.name }}
+                    </td>
+                    <td>
+                      {{ student.date }}
+                          <td class="toggle-input present" data-record-id="{{ student.id }}">
+                    <div class="toggle-dropdown">
+
+
+                        <span  id="current-status-{{ student.id }}">Present</span>
+                            <select name="attendance_status_{{ student.id }}" id="status-dropdown-{{ student.id }}">
+                            <option class="present" value="Present">Present</option>
+                            <option class="absent" value="Absent">Absent</option>
+                            <option class="leave" value="Leave">Leave</option>
+                        </select>
+                    </div>
+                </td>
+                <td>
+                    <input type="text" name="comment_{{ student.id }}">
+                </td>
+                 <td>
+                    <input type="checkbox" name="selected_records" value="{{ student.id }}">
+                      </td>
+                     </tr>
+                  {% endfor %}
+
+                 </table>
+
+          </div>
+          </div>
+              <div>
+                <button class="centered-button" style="" type="submit" value="Submit">Save</button>
+                </div>
+        </div></form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+{% endblock content %}
+
+
+
+<!-- Specific JS goes HERE -->
+{% block javascripts %}
+
+  <script src="/static/assets/vendor/chart.js/dist/Chart.min.js"></script>
+  <script src="/static/assets/vendor/chart.js/dist/Chart.extension.js"></script>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const toggleInputs = document.querySelectorAll('.toggle-input');
+
+        toggleInputs.forEach(input => {
+            const recordId = input.getAttribute('data-record-id');
+            const initialStatus = document.querySelector(`#current-status-${recordId}`);
+            const statusDropdown = document.querySelector(`#status-dropdown-${recordId}`);
+
+            input.addEventListener('click', () => {
+                if (statusDropdown.style.display === 'none') {
+                    statusDropdown.style.display = 'block';
+                } else {
+                    statusDropdown.style.display = 'none';
+                }
+            });
+
+            statusDropdown.addEventListener('change', () => {
+                initialStatus.innerText = statusDropdown.value;
+                statusDropdown.style.display = 'none';
+            });
+        });
+    });
+</script>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js">
+</script>
+<script>
+$("button").on("click", function(){
+$('#Attendance').load(' #Attendance')
+alert('Reloaded')
+});
+</script>
+
+{% endblock javascripts %}

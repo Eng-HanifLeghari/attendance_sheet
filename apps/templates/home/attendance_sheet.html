@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+{% extends 'layouts/base.html' %}
+
+{% block title %} Dashboard {% endblock title %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}
+<style>
+    .present {
+        background-color: green;
+        color: white;
+    }
+
+    .absent {
+        background-color: red;
+        color: white;
+Expert (279)
+Job type
+￼
+￼
+￼
+Hourly (503)
+Value 1￼
+￼
+under
+$10
+Value 2￼
+￼
+$100+
+￼
+Fixed-Price (229)
+￼
+Less than $100 (46)
+￼
+$100 to $500 (87)
+￼
+$500 - $1K (22)
+￼
+$1K - $5K (50)
+￼
+$5K+ (24)
+Number of proposals
+￼
+￼
+￼
+Less than 5 (79)
+￼
+5 to 10 (108)
+￼
+10 to 15 (102)
+￼
+15 to 20 (83)
+￼
+20 to 50 (222)
+Client info
+￼
+￼
+￼
+My previous clients (0)
+￼
+Payment verified (479)
+Client history
+￼
+￼
+￼
+No hires (292)
+￼
+1 to 9 hires (171)
+￼
+10+ hires (269)
+Client location
+￼
+￼
+Client time zones
+￼
+￼
+Budget (fixed-price)
+￼
+￼
+￼
+Less than $100 (46)
+￼
+$100 to $500 (87)
+￼
+$500 - $1K (22)
+￼
+$1K - $5K (50)
+￼
+$5K+ (24)
+Project length
+￼
+￼
+￼
+Less than one month (429)
+￼
+1 to 3 months (338)
+￼
+3 to 6 months (312)
+￼
+More than 6 months (340)
+Hours per week
+￼
+￼
+￼
+Less than 30 hrs/week (584)
+￼
+More than 30 hrs/week (359)
+Connects needed
+￼
+￼
+￼
+4 or less connects (81)
+￼
+8 connects (171)
+￼
+12 connects (184)
+￼
+16 connects (296)
+￼
+￼
+Contract-to-hire (261)
+Search
+Saved Jobs
+Search
+￼￼Clear Input
+￼Search
+￼
+Save search
+Save search
+￼Advanced Search
+￼More options
+
+    }
+
+    .leave {
+        background-color: yellow;
+        color: black;
+    }
+</style>
+{% endblock stylesheets %}
+
+{% block content %}
+<div class="row">
+        <div class="col-xl-12">
+          <div class="card">
+            <div class="card-header border-0">
+              <div class="row align-items-center">
+                <div class="col">
+                  <h3 class="mb-0">Page visits</h3>
+                </div>
+                <div class="col text-right">
+                  <a href="#!" class="btn btn-sm btn-primary">See all</a>
+                </div>
+              </div>
+            </div>
+            <div class="table-responsive">
+              <!-- Projects table -->
+              <table class="table align-items-center table-flush">
+                <thead class="thead-light">
+                  <tr>
+                    <th scope="col">Student Id</th>
+                    <th scope="col">Student Name</th>
+                    <th scope="col">Today Date</th>
+                    <th scope="col">Attendance Status</th>
+                    <th scope="col">Teacher Comments</th>
+                  </tr>
+                </thead>
+                <tbody>
+                {% for student in meetings %}
+                  <tr>
+                    <th scope="row">
+                      {{ student.participant_id }}
+                    </th>
+                    <td>
+                      {{ student.name }}
+                    </td>
+                    <td>
+                      {{ student.date }}
+                          <td class="toggle-input" data-record-id="{{ student.id }}">
+                    <div class="toggle-dropdown">
+                        <span class="initial-status" id="current-status-{{ student.id }}">Present</span>
+                        <select style="display: none" name="attendance_status" id="status-dropdown-{{ student.id }}">
+                            <option value="Present">Present</option>
+                            <option value="Absent">Absent</option>
+                            <option value="Leave">Leave</option>
+                        </select>
+                    </div>
+                </td>
+                <td>
+                    <input type="text" name="comment" value="">
+                </td>
+                 <td>
+                    <input type="checkbox" name="selected_records" value="{{ student.id }}">
+                      </td>
+                     </tr>
+                  {% endfor %}
+                 </table>
+                <button type="submit">Save</button>
+                </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+
+
+
+
+<!--table 2-->
+
+              <!-- Projects table -->
+              <table class="table align-items-center table-flush">
+                <thead class="thead-light">
+                  <tr>
+                    <th scope="col">Student Id</th>
+                    <th scope="col">Student Name</th>
+                    <th scope="col">Today Date</th>
+                    <th scope="col">Attendance Status</th>
+                    <th scope="col">Teacher Comments</th>
+                  </tr>
+                </thead>
+                <tbody>
+                {% for student in meetings %}
+                  <tr>
+                    <th scope="row">
+                      {{ student.participant_id }}
+                    </th>
+                    <td>
+                      {{ student.name }}
+                    </td>
+                    <td>
+                      {{ student.date }}
+                    </td>
+
+                          <td class="toggle-input" data-record-id="{{ student.id }}">
+                    <div class="toggle-dropdown">
+                        <span class="initial-status" >Present</span>
+                        <select style="display: none" name="attendance_status" >
+                            <option value="Present">Present</option>
+                            <option value="Absent">Absent</option>
+                            <option value="Leave">Leave</option>
+                        </select>
+                    </div>
+                </td>
+                <td>
+                    <input type="text" name="comment" value="">
+                </td>
+                 <td>
+                    <input type="checkbox" name="selected_records" value="{{ student.id }}">
+                      </td>
+                     </tr>
+                  {% endfor %}
+                 </table>
+                <button type="submit">Save</button>
+                </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Specific JS goes HERE -->
+{% block javascripts %}
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const toggleInputs = document.querySelectorAll('.toggle-input');
+
+        toggleInputs.forEach(input => {
+            const recordId = input.getAttribute('data-record-id');
+            const initialStatus = document.querySelector(`#current-status-${recordId}`);
+            const statusDropdown = document.querySelector(`#status-dropdown-${recordId}`);
+
+            input.addEventListener('click', () => {
+                if (statusDropdown.style.display === 'none') {
+                    statusDropdown.style.display = 'block';
+                } else {
+                    statusDropdown.style.display = 'none';
+                }
+            });
+
+            statusDropdown.addEventListener('change', () => {
+                initialStatus.innerText = statusDropdown.value;
+                statusDropdown.style.display = 'none';
+            });
+        });
+    });
+</script>
+{% endblock javascripts %}
+
